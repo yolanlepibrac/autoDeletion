@@ -1,26 +1,45 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "autoDeletion" is now active!');
+	// let disposable = vscode.commands.registerCommand('autoDeletion.autoDelete', () => {
+	// 	vscode.window.showInformationMessage('Hello Michel Michel michel from AutoDeletion!');
+	// });
+	// context.subscriptions.push(disposable);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('autoDeletion.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from AutoDeletion!');
-	});
+	let autoDeletion = vscode.commands.registerCommand('autoDeletion.autoDelete', () => autoDelete());
+	context.subscriptions.push(autoDeletion);
+}
 
-	context.subscriptions.push(disposable);
+function autoDelete() {
+	vscode.window.showInformationMessage('Auto deletion');
+	const editor = vscode.window.activeTextEditor;
+	if(!editor){
+		return; 
+	}
+    const doc = editor.document;
+    const start = editor.selections[0].start;
+	let lines:any[] = [];
+	
+	return editor.edit(editorBuilder => {
+		let range;
+		console.log(editorBuilder);
+
+        for (let i = 0; i < lines.length; i++) {
+            range = new vscode.Range(
+                lines[i].startLine,
+                lines[i].startCharacter,
+                lines[i].endLine,
+                lines[i].endCharacter
+            );
+
+            editorBuilder.delete(range);
+        }
+    });
 }
 
 // this method is called when your extension is deactivated

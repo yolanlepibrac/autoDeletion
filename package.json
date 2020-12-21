@@ -10,14 +10,22 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:autoDeletion.helloWorld"
+		"onCommand:autoDeletion.autoDelete"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "autoDeletion.helloWorld",
-				"title": "Hello World"
+				"command": "autoDeletion.autoDelete",
+				"title": "Auto Delete"
+			}
+		],
+		"keybindings": [
+			{
+				"key": "ctrl+backspace",
+				"mac": "ctrl+backspace",
+				"command": "autoDeletion.autoDelete",
+				"when": "editorTextFocus && !editorReadonly"
 			}
 		]
 	},
