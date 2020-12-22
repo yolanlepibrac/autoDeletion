@@ -3,6 +3,24 @@ import { DeletionItem } from './deletionItem';
 
 let currentSuggestion = undefined;
 
+const executeDeleteWordLeft = (sentence : string) => {
+    const inverseSentence = [...sentence].reverse();
+    const firstSpace = inverseSentence.indexOf(" ");
+    const truncatedSentence = sentence.substring(0, sentence.length-firstSpace-1);
+   return truncatedSentence;
+};
+
+const createAutocompletionList = (sentence:string) : string[] => {
+    return new Array(6).fill(undefined).reduce((prev, _current) => {
+        const prevSentence = prev[prev.length-1];
+        const newSentence = executeDeleteWordLeft(prevSentence);
+        if(newSentence !== prevSentence){
+            return [...prev, newSentence];
+        }
+        return prev;
+    },  [executeDeleteWordLeft(sentence)]);
+};
+
 export class DeletionProvider implements vscode.CompletionItemProvider {
    
     provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken):vscode.CompletionItem[] | vscode.CompletionList {
@@ -10,9 +28,8 @@ export class DeletionProvider implements vscode.CompletionItemProvider {
         const cursorLine = position.line;
         const cursorChar = position.character;
         const sentence  = line.text;
-        const propositions  = new Array(6).fill(undefined).map((_undefined, index) => {
-            return sentence.substring(0, sentence.length - index);
-        }).reverse();
+        const propositions  = createAutocompletionList(sentence);
+        console.log(propositions);
         const deletionItems = propositions.map((text, index) => {
             const item  =  new vscode.CompletionItem(text, vscode.CompletionItemKind.Snippet);
             item.insertText = text;
