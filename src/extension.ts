@@ -1,45 +1,59 @@
 import * as vscode from 'vscode';
+import { DeletionProvider } from './deletionProvider';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	console.log('Congratulations, your extension "autoDeletion" is now active!');
-	// let disposable = vscode.commands.registerCommand('autoDeletion.autoDelete', () => {
-	// 	vscode.window.showInformationMessage('Hello Michel Michel michel from AutoDeletion!');
-	// });
-	// context.subscriptions.push(disposable);
-
+	var selector : vscode.DocumentSelector = [{
+        pattern: '**'
+	}];
+	const provider = new DeletionProvider();
+	const autoCompletionProvider = vscode.languages.registerCompletionItemProvider(
+		selector,
+		provider,
+		'.'
+	);
 
 	let autoDeletion = vscode.commands.registerCommand('autoDeletion.autoDelete', () => autoDelete());
-	context.subscriptions.push(autoDeletion);
+	context.subscriptions.push(autoCompletionProvider, autoDeletion);
 }
 
-function autoDelete() {
-	vscode.window.showInformationMessage('Auto deletion');
+async function  autoDelete() {
+	
 	const editor = vscode.window.activeTextEditor;
 	if(!editor){
 		return; 
 	}
-    const doc = editor.document;
-    const start = editor.selections[0].start;
-	let lines:any[] = [];
+
+	vscode.commands.executeCommand('editor.action.triggerSuggest');
+
+	// return editor.insertSnippet(
+	// 	new vscode.SnippetString('autoDeletion'),
+	// 	new vscode.Position(0, 0)
+	// );
+
+	// const cursorLine = editor.selection.active.line;
+	// const cursorPos = editor.selection.active.character;
+	// editor.edit(editBuilder => {
+	// 	editBuilder.replace(new vscode.Range(cursorLine,0,cursorLine,cursorPos), "hekkishbqsx");
+	// });
+
+	// const {text : baseText} = editor.document.lineAt(editor.selection.active.line);
+
+	// await vscode.commands.executeCommand("deleteWordLeft");
+	// const {text : text1} = editor.document.lineAt(editor.selection.active.line);
+	// await vscode.commands.executeCommand("deleteWordLeft");
+	// const {text : text2} = editor.document.lineAt(editor.selection.active.line);
 	
-	return editor.edit(editorBuilder => {
-		let range;
-		console.log(editorBuilder);
+	// vscode.window.showInformationMessage(text1);
+	// vscode.window.showInformationMessage(text2);
 
-        for (let i = 0; i < lines.length; i++) {
-            range = new vscode.Range(
-                lines[i].startLine,
-                lines[i].startCharacter,
-                lines[i].endLine,
-                lines[i].endCharacter
-            );
-
-            editorBuilder.delete(range);
-        }
-    });
+	// return editor.edit(editBuilder => {
+	// 	editBuilder.replace(new vscode.Range(cursorLine,0,cursorLine,cursorPos), baseText);
+	// });
+	
+	
 }
 
 // this method is called when your extension is deactivated
