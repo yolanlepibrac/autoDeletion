@@ -30,33 +30,8 @@ async function  autoDelete() {
 		editBuilder.replace(new vscode.Range(cursorLine,cursorPos,cursorLine,cursorPos), ".");
 	});
 	vscode.commands.executeCommand('editor.action.triggerSuggest');
-
-	// return editor.insertSnippet(
-	// 	new vscode.SnippetString('autoDeletion'),
-	// 	new vscode.Position(0, 0)
-	// );
-
-	
-	// editor.edit(editBuilder => {
-	// 	editBuilder.replace(new vscode.Range(cursorLine,0,cursorLine,cursorPos), "hekkishbqsx");
-	// });
-
-	// const {text : baseText} = editor.document.lineAt(editor.selection.active.line);
-
-	// await vscode.commands.executeCommand("deleteWordLeft");
-	// const {text : text1} = editor.document.lineAt(editor.selection.active.line);
-	// await vscode.commands.executeCommand("deleteWordLeft");
-	// const {text : text2} = editor.document.lineAt(editor.selection.active.line);
-	
-	// vscode.window.showInformationMessage(text1);
-	// vscode.window.showInformationMessage(text2);
-
-	// return editor.edit(editBuilder => {
-	// 	editBuilder.replace(new vscode.Range(cursorLine,0,cursorLine,cursorPos), baseText);
-	// });
 	
 	
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {}

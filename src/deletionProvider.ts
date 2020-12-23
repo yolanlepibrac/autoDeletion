@@ -1,8 +1,6 @@
 import * as vscode from 'vscode';
-import { DeletionItem } from './deletionItem';
 
 const AUTOCOMPLETION_ITEMS_LENGTH = 6;
-let currentSuggestion = undefined;
 
 const executeDeleteWordLeft = (sentence : string) => {
     const inverseSentence = [...sentence].reverse();
@@ -58,10 +56,4 @@ export class DeletionProvider implements vscode.CompletionItemProvider {
         });
         return deletionItems;
     }
-
-    resolveCompletionItem(item: vscode.CompletionItem, _token: vscode.CancellationToken): vscode.ProviderResult<vscode.CompletionItem> {
-        vscode.window.showInformationMessage("");
-        currentSuggestion = item.label;
-        return item;
-      }
 }
