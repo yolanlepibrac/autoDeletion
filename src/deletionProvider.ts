@@ -52,6 +52,7 @@ export class DeletionProvider implements vscode.CompletionItemProvider {
         const deletionItems = propositions.map((text, index) => {
             const item  =  new vscode.CompletionItem(text, vscode.CompletionItemKind.Snippet);
             item.insertText = text;
+            item.sortText = endOfSentence + index;
             item.additionalTextEdits = [vscode.TextEdit.delete(new vscode.Range(cursorLine,nSpacePosition,cursorLine,cursorChar))];
             return item;
         });
