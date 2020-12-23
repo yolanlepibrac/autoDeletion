@@ -1,8 +1,6 @@
 import * as vscode from 'vscode';
 import { DeletionProvider } from './deletionProvider';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
 	var selector : vscode.DocumentSelector = [{
@@ -26,6 +24,11 @@ async function  autoDelete() {
 		return; 
 	}
 
+	const cursorLine = editor.selection.active.line;
+	const cursorPos = editor.selection.active.character;
+	editor.edit(editBuilder => {
+		editBuilder.replace(new vscode.Range(cursorLine,cursorPos,cursorLine,cursorPos), ".");
+	});
 	vscode.commands.executeCommand('editor.action.triggerSuggest');
 
 	// return editor.insertSnippet(
@@ -33,8 +36,7 @@ async function  autoDelete() {
 	// 	new vscode.Position(0, 0)
 	// );
 
-	// const cursorLine = editor.selection.active.line;
-	// const cursorPos = editor.selection.active.character;
+	
 	// editor.edit(editBuilder => {
 	// 	editBuilder.replace(new vscode.Range(cursorLine,0,cursorLine,cursorPos), "hekkishbqsx");
 	// });

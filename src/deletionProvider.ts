@@ -29,7 +29,6 @@ export class DeletionProvider implements vscode.CompletionItemProvider {
         const cursorChar = position.character;
         const sentence  = line.text;
         const propositions  = createAutocompletionList(sentence);
-        console.log(propositions);
         const deletionItems = propositions.map((text, index) => {
             const item  =  new vscode.CompletionItem(text, vscode.CompletionItemKind.Snippet);
             item.insertText = text;
