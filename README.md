@@ -1,4 +1,4 @@
-# README autoDeletion
+# README Auto Deletion
 
 Auto-deletion is VS-code extension that add to the autocomplete, a list of trucated sentences according what you wrote. When you delete some chars, auto-deletion will automatically open to propose sentences you may want.
 
