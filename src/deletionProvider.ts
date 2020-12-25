@@ -37,6 +37,10 @@ const getPositionOfNSpace = (sentence : string) => {
     return sentence.length - nSpaceFinder.position;
 };
 
+const getFinalWord = (sentence:string):string => {
+    const splitSentence  = sentence.split(" ");
+    return splitSentence[splitSentence.length-1];
+};   
 export class DeletionProvider implements vscode.CompletionItemProvider {
    
     provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken):vscode.CompletionItem[] | vscode.CompletionList {
@@ -47,11 +51,13 @@ export class DeletionProvider implements vscode.CompletionItemProvider {
         const nSpacePosition =  getPositionOfNSpace(sentence);
         const endOfSentence = sentence.substring(nSpacePosition, sentence.length);
         const propositions  = createAutocompletionList(endOfSentence);
+        const lastWordWrite = getFinalWord(sentence);
         const deletionItems = propositions.map((text, index) => {
             const item  =  new vscode.CompletionItem(text, vscode.CompletionItemKind.Snippet);
+            item.filterText = lastWordWrite;
+            item.sortText = lastWordWrite + index;
             item.insertText = text;
-            item.sortText = endOfSentence + index;
-            item.additionalTextEdits = [vscode.TextEdit.delete(new vscode.Range(cursorLine,nSpacePosition,cursorLine,cursorChar))];
+            item.additionalTextEdits = [vscode.TextEdit.delete(new vscode.Range(cursorLine,nSpacePosition + lastWordWrite.length,cursorLine,cursorChar))];
             return item;
         });
         return deletionItems;
