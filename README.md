@@ -15,15 +15,12 @@ Auto-deletion is VS-code extension that add to the autocomplete, a list of truca
 
 ## Extension Settings
 
-- 
 
 ## Known Issues
 
--
 
 ## Release Notes
 
-- 
 
 ### 1.0.0
 
