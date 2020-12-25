@@ -2,7 +2,7 @@
 	"name": "autoDeletion",
 	"displayName": "AutoDeletion",
 	"description": "Auto-completion for characters deletion",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.52.0"
 	},
