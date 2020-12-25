@@ -22,8 +22,8 @@
 		],
 		"keybindings": [
 			{
-				"key": "ctrl+backspace",
-				"mac": "ctrl+backspace",
+				"key": "backspace",
+				"mac": "backspace",
 				"command": "autoDeletion.autoDelete",
 				"when": "editorTextFocus && !editorReadonly"
 			}

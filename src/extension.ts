@@ -17,9 +17,9 @@ async function  autoDelete() {
 	}
 	const cursorLine = editor.selection.active.line;
 	const cursorPos = editor.selection.active.character;
-	// editor.edit(editBuilder => {
-	// 	editBuilder.replace(new vscode.Range(cursorLine,cursorPos,cursorLine,cursorPos), ".");
-	// });
+	editor.edit(editBuilder => {
+		editBuilder.replace(new vscode.Range(cursorLine,cursorPos-1,cursorLine,cursorPos), "");
+	});
 	vscode.commands.executeCommand('editor.action.triggerSuggest');
 }
 
